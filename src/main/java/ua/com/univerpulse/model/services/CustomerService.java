@@ -4,12 +4,13 @@ import ua.com.univerpulse.model.entities.Customer;
 
 import java.util.List;
 
-/**
- * @author Danny Briskin (sql.coach.kiev@gmail.com)
-  */
-public interface CustomerService {
-    public Customer getCustomer(int id);
 
-    public List<Customer> getAllCustomers();
+public interface CustomerService {
+
+    Customer getCustomer(int id);
+
+    List<Customer> getAllCustomers();
+
+    Customer sumCustomerBalanceWithPaymentAmount(int id, float amount);
 
 }

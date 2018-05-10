@@ -26,4 +26,13 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
+
+    @Override
+    public Customer sumCustomerBalanceWithPaymentAmount(int id, float amount) {
+        Customer customer = customerRepository.findOne(id);
+        float balance = customer.getBalance();
+        balance += amount;
+        customer.setBalance(balance);
+        return customerRepository.saveAndFlush(customer);
+    }
 }

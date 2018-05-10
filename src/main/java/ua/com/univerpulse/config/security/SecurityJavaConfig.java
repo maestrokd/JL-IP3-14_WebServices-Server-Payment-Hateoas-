@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author Danny Briskin (sql.coach.kiev@gmail.com)
@@ -18,6 +21,18 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @Configuration
 @EnableWebSecurity
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
+
+
+    // For cross origin requests (это когда ваш клиент (на 8080) пересылает запрос на другой URL (на 8090)
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
+    }
 
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -43,7 +58,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/paymentsall", "/api/payments/**")
+                .antMatchers("/api/paymentsall", "/api/payments/**", "/api/paymentz/**")
                 .hasAnyRole("USER","ADMIN")
                 .antMatchers( "/api/paymentcreate/**"
                         , "/api/paymentupdate/**"

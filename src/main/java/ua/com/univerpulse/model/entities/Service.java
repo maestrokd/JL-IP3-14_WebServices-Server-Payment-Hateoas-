@@ -24,15 +24,15 @@ public class Service {
 
     @XmlTransient
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true, mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<CustomerService> customerServiceList = new ArrayList<>();
+    private List<CustomerServiceEntity> customerServiceEntityList = new ArrayList<>();
 
     public void addCustomer(Customer customer, ServiceStatus serviceStatus) {
-        CustomerService customerService = new CustomerService();
-        customerService.setServiceStatus(serviceStatus);
-        customerService.setCustomer(customer);
-        customerService.setService(this);
-        customerServiceList.add(customerService);
-        customer.getCustomerServiceList().add(customerService);
+        CustomerServiceEntity customerServiceEntity = new CustomerServiceEntity();
+        customerServiceEntity.setServiceStatus(serviceStatus);
+        customerServiceEntity.setCustomer(customer);
+        customerServiceEntity.setService(this);
+        customerServiceEntityList.add(customerServiceEntity);
+        customer.getCustomerServiceEntityList().add(customerServiceEntity);
     }
 
 //    @ManyToMany(mappedBy = "serviceList")
@@ -87,12 +87,12 @@ public class Service {
         this.payroll = payroll;
     }
 
-    public List<CustomerService> getCustomerServiceList() {
-        return customerServiceList;
+    public List<CustomerServiceEntity> getCustomerServiceEntityList() {
+        return customerServiceEntityList;
     }
 
-    public void setCustomerServiceList(List<CustomerService> customerServiceList) {
-        this.customerServiceList = customerServiceList;
+    public void setCustomerServiceEntityList(List<CustomerServiceEntity> customerServiceEntityList) {
+        this.customerServiceEntityList = customerServiceEntityList;
     }
 
     public Set<Event> getEventList() {

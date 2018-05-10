@@ -19,7 +19,7 @@ public class ServiceStatus {
     private String name = "deactive";
 
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true, mappedBy = "serviceStatus")
-    private Set<CustomerService> customerServiceList = new HashSet<>();
+    private Set<CustomerServiceEntity> customerServiceEntityList = new HashSet<>();
 
 
     // Getter and Setter
@@ -40,11 +40,11 @@ public class ServiceStatus {
         this.name = name;
     }
 
-    public Set<CustomerService> getCustomerServiceList() {
-        return customerServiceList;
+    public Set<CustomerServiceEntity> getCustomerServiceEntityList() {
+        return customerServiceEntityList;
     }
 
-    public void setCustomerServiceList(Set<CustomerService> customerServiceList) {
-        this.customerServiceList = customerServiceList;
+    public void setCustomerServiceEntityList(Set<CustomerServiceEntity> customerServiceEntityList) {
+        this.customerServiceEntityList = customerServiceEntityList;
     }
 }

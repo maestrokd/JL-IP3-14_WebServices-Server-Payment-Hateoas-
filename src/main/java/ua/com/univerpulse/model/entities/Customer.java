@@ -46,32 +46,32 @@ public class Customer {
     private User user;
 
     @OneToMany(mappedBy = "customer", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<CustomerService> customerServiceList = new ArrayList<>();
+    private List<CustomerServiceEntity> customerServiceEntityList = new ArrayList<>();
 
-    public  CustomerService addService(Service service, ServiceStatus serviceStatus) {
+    public CustomerServiceEntity addService(Service service, ServiceStatus serviceStatus) {
         System.out.println("Add Service");
-        CustomerService customerService = new CustomerService();
-        customerService.setCustomer(this);
-        customerService.setService(service);
-        customerService.setServiceStatus(serviceStatus);
-        customerServiceList.add(customerService);
-        service.getCustomerServiceList().add(customerService);
-        return customerService;
+        CustomerServiceEntity customerServiceEntity = new CustomerServiceEntity();
+        customerServiceEntity.setCustomer(this);
+        customerServiceEntity.setService(service);
+        customerServiceEntity.setServiceStatus(serviceStatus);
+        customerServiceEntityList.add(customerServiceEntity);
+        service.getCustomerServiceEntityList().add(customerServiceEntity);
+        return customerServiceEntity;
     }
 
     public void removeService(Service service) {
-        CustomerService customerServiceTemp = null;
-        for (CustomerService customerService : customerServiceList) {
-            if (service.getName().equals(customerService.getService().getName())) {
-                customerServiceTemp = customerService;
+        CustomerServiceEntity customerServiceEntityTemp = null;
+        for (CustomerServiceEntity customerServiceEntity : customerServiceEntityList) {
+            if (service.getName().equals(customerServiceEntity.getService().getName())) {
+                customerServiceEntityTemp = customerServiceEntity;
                 break;
             }
         }
-        if (customerServiceTemp == null) {
+        if (customerServiceEntityTemp == null) {
             return;
         } else {
-            customerServiceList.remove(customerServiceTemp);
-            service.getCustomerServiceList().remove(customerServiceTemp);
+            customerServiceEntityList.remove(customerServiceEntityTemp);
+            service.getCustomerServiceEntityList().remove(customerServiceEntityTemp);
         }
     }
 
@@ -128,6 +128,8 @@ public class Customer {
 
     // Constructors
     public Customer() {}
+
+
 
 
     // Getters and Setters
@@ -205,12 +207,12 @@ public class Customer {
         this.user = user;
     }
 
-    public List<CustomerService> getCustomerServiceList() {
-        return customerServiceList;
+    public List<CustomerServiceEntity> getCustomerServiceEntityList() {
+        return customerServiceEntityList;
     }
 
-    public void setCustomerServiceList(List<CustomerService> customerServiceList) {
-        this.customerServiceList = customerServiceList;
+    public void setCustomerServiceEntityList(List<CustomerServiceEntity> customerServiceEntityList) {
+        this.customerServiceEntityList = customerServiceEntityList;
     }
 
     public Set<Event> getEventList() {
@@ -248,7 +250,7 @@ public class Customer {
                 ", balance=" + balance +
 //                ", user=" + user.getLogin() +
                 ", hash=" + this.hashCode() +
-//                ", customerServiceList=" + customerServiceList +
+//                ", customerServiceEntityList=" + customerServiceEntityList +
                // ", eventList=" + eventList +
 //                ", billList=" + billList +
 //                ", paymentList=" + paymentList +

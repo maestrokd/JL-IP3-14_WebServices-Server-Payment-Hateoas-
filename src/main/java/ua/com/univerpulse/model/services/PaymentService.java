@@ -12,17 +12,16 @@ import java.util.List;
  * @author Danny Briskin (sql.coach.kiev@gmail.com)
   */
 public interface PaymentService {
-    void addPayment(Payment payment);
-    Integer makePayment(Customer customer, PaymentDTO payment);
+    Payment addPayment(Payment payment);
+    Payment makePayment(Customer customer, PaymentDTO payment);
     Integer makePayment(Customer customer, Payment payment);
 
     Payment getPayment(int id);
-    Payment getPayment(int id, int customerID);
 
     List<Payment> getAllPayments();
     List<Payment> getCustomerPayments(Customer customer);
 
-    Integer create(PaymentDTO resource);
+    Payment create(PaymentDTO resource);
 
     void updatePayment(Payment payment,PaymentDTO paymentDTO);
     void updatePayment(Payment payment,Payment  newPayment);

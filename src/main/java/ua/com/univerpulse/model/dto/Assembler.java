@@ -1,10 +1,11 @@
 package ua.com.univerpulse.model.dto;
 
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
-import ua.com.univerpulse.controllers.AppController;
+import ua.com.univerpulse.controllers.PaymentController;
 import ua.com.univerpulse.model.entities.Payment;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Assembler {
     }
 
     public PaymentDTO getPaymentDTO(Payment payment) {
-        Link selfLink = linkTo(methodOn(AppController.class)
+        Link selfLink = linkTo(methodOn(PaymentController.class)
                 .getPayment(payment.getId()))
 //                .slash(payment.getId())
                 .withSelfRel();
@@ -51,11 +52,26 @@ public class Assembler {
         return paymentDTO;
     }
 
-    public Page<PaymentDTO> getPaymentDToPage(Page<Payment> page, Pageable pageable) {
+    public Page<PaymentDTO> getPaymentDToPageOld(Page<Payment> page, Pageable pageable) {
+        System.out.println("1-" + page.getTotalPages());
+        System.out.println("1-" + page.getTotalElements());
         List<PaymentDTO> paymentDTOS = new ArrayList<>();
         for (Payment p : page) {
             paymentDTOS.add(getPaymentDTO(p));
         }
+        System.out.println("paymentDTOS size: " + paymentDTOS.size());
         return new PageImpl<>(paymentDTOS, pageable, page.getTotalPages());
     }
+
+    public Page<PaymentDTO> getPaymentDToPage(Page<Payment> page) {
+        Page<PaymentDTO> paymentDTOPage = page.map(new Converter<Payment, PaymentDTO>() {
+            @Override
+            public PaymentDTO convert(Payment payment) {//
+                return getPaymentDTO(payment);
+            }
+        });
+        return paymentDTOPage;
+    }
+
+
 }

@@ -3,6 +3,7 @@ package ua.com.univerpulse.model.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Payment{
     private Customer customer;
 
     @JsonIgnore
+    @CreationTimestamp
     @Column(nullable = false)
     private Date date;
 
@@ -37,6 +39,12 @@ public class Payment{
     private String channel;
 
     public Payment() {
+    }
+
+    public Payment(Customer customer, Float amount, String channel) {
+        this.customer = customer;
+        this.amount = amount;
+        this.channel = channel;
     }
 
     public Integer getId() {
@@ -93,6 +101,15 @@ public class Payment{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return  simpleDateFormat.format(this.date);
     }
+
+
+    public String getDateAndTimeAsString() {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return  simpleDateFormat.format(this.date);
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

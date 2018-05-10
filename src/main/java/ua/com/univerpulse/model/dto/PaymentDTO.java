@@ -30,7 +30,8 @@ public class PaymentDTO extends ResourceSupport {
         this.paymentId = payment.getId();
         this.customerId = payment.getCustomer().getId();
         this.amount = payment.getAmount();
-        this.date = payment.getDateAsString();
+//        this.date = payment.getDateAsString();
+        this.date = payment.getDateAndTimeAsString();
         this.channel = payment.getChannel();
     }
 
@@ -66,4 +67,31 @@ public class PaymentDTO extends ResourceSupport {
                 ", channel='" + channel + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        PaymentDTO that = (PaymentDTO) o;
+
+        if (paymentId != null ? !paymentId.equals(that.paymentId) : that.paymentId != null) return false;
+        if (customerId != null ? !customerId.equals(that.customerId) : that.customerId != null) return false;
+        if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        return channel != null ? channel.equals(that.channel) : that.channel == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (paymentId != null ? paymentId.hashCode() : 0);
+        result = 31 * result + (customerId != null ? customerId.hashCode() : 0);
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (channel != null ? channel.hashCode() : 0);
+        return result;
+    }
+
 }

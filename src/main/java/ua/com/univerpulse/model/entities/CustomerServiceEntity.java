@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "customer_service")
-public class CustomerService implements Serializable {
+public class CustomerServiceEntity implements Serializable {
 
 
     // Fields
@@ -29,7 +29,7 @@ public class CustomerService implements Serializable {
     private ServiceStatus serviceStatus;
 
     // Constructors
-    public CustomerService() {
+    public CustomerServiceEntity() {
     }
 
 

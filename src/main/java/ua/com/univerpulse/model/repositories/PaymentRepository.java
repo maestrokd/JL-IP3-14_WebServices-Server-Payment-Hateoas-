@@ -26,6 +26,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     Page<Payment> findByCustomer(Customer customer, Pageable pageable);
 
     Page<Payment> findAll(Pageable pageable);
+
 }
 
 
